@@ -43,37 +43,38 @@
 .dark {
   /* Updated dark theme with softer, lighter colors instead of pure black */
   /* Making all colors significantly lighter for better visibility */
-  --background: oklch(0.22 0 0); /* Much lighter background from 0.15 to 0.22 */
-  --foreground: oklch(0.95 0 0); /* Brighter text */
-  --card: oklch(0.26 0 0); /* Lighter cards from 0.18 to 0.26 */
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.26 0 0);
-  --popover-foreground: oklch(0.95 0 0);
+  /* Making colors even lighter for better visibility and reduced eye strain */
+  --background: oklch(0.32 0 0); /* Much lighter background from 0.22 to 0.32 */
+  --foreground: oklch(0.96 0 0); /* Brighter text */
+  --card: oklch(0.38 0 0); /* Lighter cards from 0.26 to 0.38 */
+  --card-foreground: oklch(0.96 0 0);
+  --popover: oklch(0.38 0 0);
+  --popover-foreground: oklch(0.96 0 0);
   --primary: oklch(0.55 0.18 264);
-  --primary-foreground: oklch(0.22 0 0); /* Match new background */
-  --secondary: oklch(0.3 0 0); /* Much lighter secondary from 0.22 to 0.3 */
-  --secondary-foreground: oklch(0.92 0 0); /* Brighter secondary text */
-  --muted: oklch(0.28 0 0); /* Lighter muted areas from 0.22 to 0.28 */
-  --muted-foreground: oklch(0.75 0 0); /* Better contrast for muted text */
+  --primary-foreground: oklch(0.32 0 0); /* Match new background */
+  --secondary: oklch(0.42 0 0); /* Much lighter secondary from 0.3 to 0.42 */
+  --secondary-foreground: oklch(0.94 0 0); /* Brighter secondary text */
+  --muted: oklch(0.4 0 0); /* Lighter muted areas from 0.28 to 0.4 */
+  --muted-foreground: oklch(0.78 0 0); /* Better contrast for muted text */
   --accent: oklch(0.35 0.15 120);
-  --accent-foreground: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.96 0 0);
   --destructive: oklch(0.5 0.2 25);
-  --destructive-foreground: oklch(0.95 0 0);
-  --border: oklch(0.35 0 0); /* Much lighter borders from 0.25 to 0.35 */
-  --input: oklch(0.28 0 0); /* Lighter input backgrounds from 0.2 to 0.28 */
+  --destructive-foreground: oklch(0.96 0 0);
+  --border: oklch(0.48 0 0); /* Much lighter borders from 0.35 to 0.48 */
+  --input: oklch(0.4 0 0); /* Lighter input backgrounds from 0.28 to 0.4 */
   --ring: oklch(0.55 0.18 264);
   --chart-1: oklch(0.49 0.24 264);
   --chart-2: oklch(0.7 0.17 162);
   --chart-3: oklch(0.77 0.19 70);
   --chart-4: oklch(0.63 0.27 304);
   --chart-5: oklch(0.65 0.25 16);
-  --sidebar: oklch(0.24 0 0); /* Lighter sidebar from 0.16 to 0.24 */
-  --sidebar-foreground: oklch(0.93 0 0); /* Brighter sidebar text */
+  --sidebar: oklch(0.36 0 0); /* Lighter sidebar from 0.24 to 0.36 */
+  --sidebar-foreground: oklch(0.94 0 0); /* Brighter sidebar text */
   --sidebar-primary: oklch(0.55 0.18 264);
-  --sidebar-primary-foreground: oklch(0.22 0 0);
-  --sidebar-accent: oklch(0.28 0 0); /* Lighter sidebar accents from 0.2 to 0.28 */
-  --sidebar-accent-foreground: oklch(0.92 0 0);
-  --sidebar-border: oklch(0.32 0 0); /* More visible sidebar borders from 0.24 to 0.32 */
+  --sidebar-primary-foreground: oklch(0.32 0 0);
+  --sidebar-accent: oklch(0.4 0 0); /* Lighter sidebar accents from 0.28 to 0.4 */
+  --sidebar-accent-foreground: oklch(0.94 0 0);
+  --sidebar-border: oklch(0.45 0 0); /* More visible sidebar borders from 0.32 to 0.45 */
   --sidebar-ring: oklch(0.55 0.18 264);
 }
 
