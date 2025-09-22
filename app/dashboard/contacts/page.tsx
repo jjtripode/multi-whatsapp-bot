@@ -1,6 +1,5 @@
 "use client"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,89 +31,62 @@ import {
   Star,
   Tag,
 } from "lucide-react"
+import { WtsContact } from "@/app/models/WtsContact"
+import { getWtsContacts } from "@/app/server/wts/wtsApi"
+import { formatTelephone } from "@/app/helper/helper";
 
-interface Contact {
-  id: string
-  name: string
-  phone: string
-  email?: string
-  lastMessage: string
-  lastContact: string
-  status: "active" | "blocked" | "archived"
-  tags: string[]
-  totalMessages: number
-  avatar?: string
-}
-
-export default function ContactsPage() {
+export default async function ContactsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedContacts, setSelectedContacts] = useState<string[]>([])
+  const [contacts, setContacts] = useState<WtsContact[]>([])
 
-  const contacts: Contact[] = [
-    {
-      id: "1",
-      name: "Juan Pérez",
-      phone: "+1 234 567 8901",
-      email: "juan@email.com",
-      lastMessage: "Gracias por la información",
-      lastContact: "Hace 2 horas",
-      status: "active",
-      tags: ["Cliente", "VIP"],
-      totalMessages: 45,
-    },
-    {
-      id: "2",
-      name: "María García",
-      phone: "+1 234 567 8902",
-      email: "maria@email.com",
-      lastMessage: "¿Cuáles son sus horarios?",
-      lastContact: "Hace 5 horas",
-      status: "active",
-      tags: ["Prospecto"],
-      totalMessages: 12,
-    },
-    {
-      id: "3",
-      name: "Carlos López",
-      phone: "+1 234 567 8903",
-      lastMessage: "Perfecto, muchas gracias",
-      lastContact: "Ayer",
-      status: "active",
-      tags: ["Cliente"],
-      totalMessages: 28,
-    },
-    {
-      id: "4",
-      name: "Ana Martínez",
-      phone: "+1 234 567 8904",
-      email: "ana@email.com",
-      lastMessage: "Me interesa el producto",
-      lastContact: "Hace 3 días",
-      status: "archived",
-      tags: ["Prospecto", "Interesado"],
-      totalMessages: 8,
-    },
-  ]
+   useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        console.error('buscando fetching contacts:');
 
-  const getStatusBadge = (status: Contact["status"]) => {
-    switch (status) {
-      case "active":
-        return <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Activo</Badge>
-      case "blocked":
-        return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Bloqueado</Badge>
-      case "archived":
-        return <Badge className="bg-gray-500/10 text-gray-600 border-gray-500/20">Archivado</Badge>
-      default:
-        return null
-    }
-  }
+        const data = await getWtsContacts('028208fd01cc119b42ea8c819311bce3');
+        console.log('Fetched contacts:', JSON.stringify(data, null, 2));
+        
+        if (!data) {
+          throw new Error('No data received from API');
+        }
+        
+        setContacts(data);
+      } catch (err) {
+        console.error('Error fetching contacts:', err);
+        setContacts([]); // Set empty array on error
+      } finally {
+        // Handle loading state if needed
+      }
+    };
 
-  const filteredContacts = contacts.filter(
-    (contact) =>
-      contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      contact.phone.includes(searchQuery) ||
-      contact.email?.toLowerCase().includes(searchQuery.toLowerCase()),
-  )
+    fetchContacts();
+  }, [])
+
+
+  // const getStatusBadge = (status: WtsContact["status"]) => {
+  //   switch (status) {
+  //     case "active":
+  //       return <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Activo</Badge>
+  //     case "blocked":
+  //       return <Badge className="bg-red-500/10 text-red-600 border-red-500/20">Bloqueado</Badge>
+  //     case "archived":
+  //       return <Badge className="bg-gray-500/10 text-gray-600 border-gray-500/20">Archivado</Badge>
+  //     default:
+  //       return null
+  //   }
+  // }
+
+  // const filteredContacts = contacts;
+
+  // // const filteredContacts = contacts.filter(
+  // //   // (contact) =>
+  // //   //   contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  // //   //   contact.phone.includes(searchQuery) ||
+  // //   //   contact.email?.toLowerCase().includes(searchQuery.toLowerCase()),
+  // //   contacts
+  // // )
 
   return (
     <div className="space-y-6">
@@ -190,7 +162,7 @@ export default function ContactsPage() {
               <MessageSquare className="h-4 w-4 text-green-600" />
               <div>
                 <p className="text-sm font-medium">Activos</p>
-                <p className="text-2xl font-bold">{contacts.filter((c) => c.status === "active").length}</p>
+                {/* <p className="text-2xl font-bold">{contacts.filter((c) => c.status === "active").length}</p> */}
               </div>
             </div>
           </CardContent>
@@ -201,7 +173,7 @@ export default function ContactsPage() {
               <Star className="h-4 w-4 text-yellow-600" />
               <div>
                 <p className="text-sm font-medium">VIP</p>
-                <p className="text-2xl font-bold">{contacts.filter((c) => c.tags.includes("VIP")).length}</p>
+                {/* <p className="text-2xl font-bold">{contacts.filter((c) => c.tags.includes("VIP")).length}</p> */}
               </div>
             </div>
           </CardContent>
@@ -212,7 +184,7 @@ export default function ContactsPage() {
               <Tag className="h-4 w-4 text-purple-600" />
               <div>
                 <p className="text-sm font-medium">Prospectos</p>
-                <p className="text-2xl font-bold">{contacts.filter((c) => c.tags.includes("Prospecto")).length}</p>
+                {/* <p className="text-2xl font-bold">{contacts.filter((c) => c.tags.includes("Prospecto")).length}</p> */}
               </div>
             </div>
           </CardContent>
@@ -255,7 +227,7 @@ export default function ContactsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredContacts.map((contact) => (
+              {contacts.map((contact) => (
                 <TableRow key={contact.id}>
                   <TableCell>
                     <div className="flex items-center space-x-3">
@@ -265,41 +237,42 @@ export default function ContactsPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium">{contact.name}</p>
-                        <p className="text-sm text-muted-foreground truncate max-w-[200px]">{contact.lastMessage}</p>
+                        {/* <p className="text-sm text-muted-foreground truncate max-w-[200px]">{contact.lastMessage}</p> */}
                       </div>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center space-x-2">
                       <Phone className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm">{contact.phone}</span>
+                      <span className="text-sm">{formatTelephone(contact.id)}</span>
+                      <span className="text-sm">{contact.id}</span>
                     </div>
                   </TableCell>
                   <TableCell>
-                    {contact.email ? (
+                    {/* {contact.email ? (
                       <div className="flex items-center space-x-2">
                         <Mail className="h-4 w-4 text-muted-foreground" />
                         <span className="text-sm">{contact.email}</span>
                       </div>
-                    ) : (
+                    ) : ( */}
                       <span className="text-sm text-muted-foreground">-</span>
-                    )}
+                    {/* )} */}
                   </TableCell>
-                  <TableCell>{getStatusBadge(contact.status)}</TableCell>
+                  {/* <TableCell>{getStatusBadge(contact.status)}</TableCell> */}
                   <TableCell>
                     <div className="flex flex-wrap gap-1">
-                      {contact.tags.map((tag, index) => (
+                      {/* {contact.tags.map((tag, index) => (
                         <Badge key={index} variant="secondary" className="text-xs">
                           {tag}
                         </Badge>
-                      ))}
+                      ))} */}
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm text-muted-foreground">{contact.lastContact}</span>
+                    {/* <span className="text-sm text-muted-foreground">{contact.lastContact}</span> */}
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm font-medium">{contact.totalMessages}</span>
+                    {/* <span className="text-sm font-medium">{contact.totalMessages}</span> */}
                   </TableCell>
                   <TableCell>
                     <DropdownMenu>
